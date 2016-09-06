@@ -22,8 +22,8 @@ Some Debian commands:
 - (optional) sudo ifconfig wlan0 [static ip-address]
 - sudo service hostapd <action>
 - sudo service udhcpd <action>
-- sudo update-rc.d hostapd <enable/disable>
-- sudo update-rc.d udhcpd <enable/disable>
+- sudo update-rc.d hostapd [enable/disable]
+- sudo update-rc.d udhcpd [enable/disable]
 
 Experimenting:
 - Starting with Jessie light on rpi2
