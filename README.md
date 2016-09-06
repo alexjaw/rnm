@@ -19,7 +19,7 @@ Conf files affected:
 
 Some Debian commands:
 - sudo apt-get install hostapd udhcpd -y
-- (optional) sudo ifconfig wlan0 <static ip-address>
+- (optional) sudo ifconfig wlan0 [static ip-address]
 - sudo service hostapd <action>
 - sudo service udhcpd <action>
 - sudo update-rc.d hostapd <enable/disable>
