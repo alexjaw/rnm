@@ -9,14 +9,14 @@ Starting points:
 - Working with hostapd.conf: https://pypi.python.org/pypi/pyhostapdconf/1.0
 - Network Manager (dbus): http://dev.iachieved.it/iachievedit/exploring-networkmanager-d-bus-systemd-and-raspberry-pi/
 - Reading and replacing config values in linux conf files - general methods: http://stackoverflow.com/questions/39086/search-and-replace-a-line-in-a-file-in-python?rq=1
-- 
+
 Conf files affected:
 - /etc/udhcpd.conf
 - /etc/default/udhcpd
 - /etc/network/interfaces
 - /etc/hostapd/hostapd.conf 
 - /etc/default/hostapd
-- 
+
 Some Debian commands:
 - sudo apt-get install hostapd udhcpd -y
 - (optional) sudo ifconfig wlan0 <static ip-address>
