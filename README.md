@@ -11,6 +11,7 @@ Starting points:
 - Working with hostapd.conf: https://pypi.python.org/pypi/pyhostapdconf/1.0
 - Network Manager (dbus): http://dev.iachieved.it/iachievedit/exploring-networkmanager-d-bus-systemd-and-raspberry-pi/
 - Reading and replacing config values in linux conf files - general methods: http://stackoverflow.com/questions/39086/search-and-replace-a-line-in-a-file-in-python?rq=1
+- Starting simple service using systemd: http://www.diegoacuna.me/how-to-run-a-script-as-a-service-in-raspberry-pi-raspbian-jessie/ 
 
 Conf files affected:
 - /etc/udhcpd.conf

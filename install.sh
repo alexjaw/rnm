@@ -2,6 +2,7 @@
 echo Installs and starts the web server...
 echo     Only works with eth0
 echo     Does not start access point
+echo     Does not install or start any service
 echo
 
 WEB_SERVER=flasky/hello.py

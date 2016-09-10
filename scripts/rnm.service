@@ -1,0 +1,14 @@
+# ref: http://www.diegoacuna.me/how-to-run-a-script-as-a-service-in-raspberry-pi-raspbian-jessie/
+# ref: https://www.freedesktop.org/software/systemd/man/systemd.service.html
+# file: /lib/systemd/system/rnm.service
+[Unit]
+Description=simple network manager
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python /home/pi/rnm/rnm/rnm.py >/home/pi/rnm/rnm/rnm.log
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
