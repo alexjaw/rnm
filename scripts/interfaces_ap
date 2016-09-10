@@ -1,0 +1,12 @@
+# AP config
+# file: /etc/network/interfaces
+source-directory /etc/network/interfaces.d
+
+auto lo
+iface lo inet loopback
+
+iface eth0 inet manual
+
+iface wlan0 inet static
+  address 192.168.42.1
+  netmask 255.255.255.0

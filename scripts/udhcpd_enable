@@ -1,0 +1,11 @@
+# ref: http://elinux.org/RPI-Wireless-Hotspot
+# file: /etc/default/udhcpd
+# Comment the following line to enable
+#DHCPD_ENABLED="no"
+
+# Options to pass to busybox' udhcpd.
+#
+# -S    Log to syslog
+# -f    run in foreground
+
+DHCPD_OPTS="-S"
