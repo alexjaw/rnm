@@ -25,5 +25,5 @@ sudo cp hostapd /etc/default/hostapd
 
 #sudo service hostapd start
 #sudo service udhcpd start
-echo reboot...
-sudo reboot
+#echo reboot...
+#sudo reboot
