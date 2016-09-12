@@ -3,6 +3,10 @@ Raspberry Network Manager (jessie)
 
 Purpose: Provide services that can connect a headless raspberry to a wifi network. Let's say we have a device equipped with a rpi and that we place it in a new wifi environment. Then we would like to have an easy way (for non-technical end-users) to enable wireless networking for our device. If the device does not find a guest network, then it should start an access point and provide some service for further wifi network configuration.
 
+Similar projects:
+(search for "wifi" on pypi)
+- smartanthill: : http://smartanthill-20.readthedocs.io/en/latest/
+
 Starting points:
 - Raspbian jessie networking is using /etc/dhcpcd, previously configured with /etc/network/interfaces, see for example http://raspberrypi.stackexchange.com/questions/39785/dhcpcd-vs-etc-network-interfaces
 - Debian network configurations: https://wiki.debian.org/NetworkConfiguration
