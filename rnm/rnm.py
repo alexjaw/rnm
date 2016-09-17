@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import logging
 from subprocess import check_output, Popen, PIPE
 from time import sleep
 
@@ -34,8 +35,13 @@ class Service:
 
 
 class NetworkConnection:
-    def __init__(self):
-        pass
+    def __init__(self, logger=None):
+        self.logger = logger or logging.getLogger(__name__ + '.NetworkConnection')
+        # todo: Sometimes we want to run at debug level, how to set that for an
+        #       individual class? I get a FileHandler from web_server.py
+        #       Right now I do this by setting handler.setLevel(logging.DEBUG)
+        #       in web_server.py
+        self.logger.info('------------- Starting NetworkConnection... -------------')
 
     def connect(self):
         pass
@@ -50,6 +56,7 @@ class NetworkConnection:
 
     def get_ip(self):
         ips = check_output(['hostname', '--all-ip-addresses'])
+        self.logger.debug('ips = {}'.format(repr(ips)))
         return ips.strip().split()
 
     def setup(self):
@@ -60,7 +67,7 @@ class WiFi(NetworkConnection):
     setup_script = '/home/pi/rnm/scripts/setup_wifi.sh'
 
     def __init__(self):
-        NetworkConnection.__init__(self)
+        NetworkConnection.__init__(self)  # in python3 only super.__init__()
 
     def setup(self):
         p = Popen(['sh', self.setup_script], stdout=PIPE, stderr=PIPE)
@@ -110,44 +117,30 @@ class RaspberryNetworkManager:
         return False
 
 
-def to_logfile(log_this):
-    with open('/home/pi/rnm/rnm/rnm.log', 'a') as f:
-        f.write(repr(log_this))
-        f.write('\n')
-
-def temp_test():
-    i = 0
-    try:
-        while True:
-            to_logfile('Hello from rnm.service\n')
-            sleep(5)
-            i += 1
-            if i > 5:
-                break
-    except KeyboardInterrupt, e:
-        pass
-    print "Stopping..."
-
 def test_me():
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+    logger.info('------------- Starting test... -------------')
+
     netcon = NetworkConnection()
     wifi = WiFi()
     ap = AccessPoint()
     dhcp = DHCP()
 
     ips = netcon.get_ip()
-    to_logfile(repr(ips))
+    logger.info(repr(ips))
     assert type(ips) == list
 
     resp = ap.status()
-    to_logfile(resp)
+    logger.info(repr(resp))
 
     resp = dhcp.status()
-    to_logfile(resp)
+    logger.info(repr(resp))
 
     resp = wifi.setup()
-    to_logfile(resp)
+    logger.info(repr(resp))
 
-    to_logfile('---------- finished ----------')
+    logger.info('-------------    Finished      -------------')
 
 if __name__ == '__main__':
     test_me()
