@@ -10,6 +10,7 @@ def index():
     html_elements = []
     html_elements.append('<h1>Hello</h1>')
     html_elements.append('<p>My eth0 IP: ' + str(eth.get_ip()) + '</p>')
+    html_elements.append('<p>My wlan0 IP: ' + str(wlan.get_ip()) + '</p>')
     html_elements.append('<p>Can see these hotspots: ' + 'TBD' + '</p>')
     html_page = '\n'.join(html_elements)
     return html_page
@@ -29,4 +30,5 @@ if __name__ == '__main__':
     logger.addHandler(handler)
 
     eth = Interface(iface='eth0', logger=logger)
+    wlan = Interface(iface='wlan0', logger=logger)
     app.run(host='0.0.0.0')

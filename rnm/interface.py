@@ -17,15 +17,36 @@ class Interface:
         self.logger.info('------------- Starting... -------------')
         self.iface = iface
 
+    def _interface_cmd(self, cmd):
+        p = Popen(['sudo', cmd, self.iface], stdout=PIPE, stderr=PIPE)
+        # todo: should do with info from p.communicate()
+        resp = p.communicate()
+        self.logger.debug('stdout: %s', repr(resp[0]))
+        self.logger.debug('stderr: %s', repr(resp[1]))
+        if p.returncode == 0:
+            return True
+        else:
+            return False
+
     def connect(self):
-        pass
+        if self._interface_cmd('ifup'):
+            self.logger.info('connected')
+            return True
+        else:
+            self.logger.error('connection failed')
+            return False
 
     def disconnect(self):
-        pass
+        if self._interface_cmd('ifdown'):
+            self.logger.info('disconnected')
+            return True
+        else:
+            self.logger.error('disconnection failed')
+            return False
 
     def get_ip(self):
         # OBS: several os commands have to be use '' and NOT ""
-        cmd = ['ip', 'addr', 'show', 'eth0']
+        cmd = ['ip', 'addr', 'show', self.iface]
         self.logger.debug('os cmd: {}'.format(cmd))
         try:
             iface_info = check_output(cmd).split()
@@ -33,14 +54,19 @@ class Interface:
             self.logger.error('Failed with check_output: %s', e.args)
             ip = 'error'
         else:
-            inet = iface_info[iface_info.index('inet') + 1]
-            ip = inet.split('/')[0]
+            try:
+                inet = iface_info[iface_info.index('inet') + 1]
+            except ValueError as e:
+                self.logger.debug('ValueError for inet: %s', e.args)
+                ip = 'no IP - not connected'
+            else:
+                ip = inet.split('/')[0]
+
         self.logger.debug('ip = {}'.format(repr(ip)))
         return ip
 
     def setup(self):
         pass
-
 
 
 def test_me():
@@ -49,9 +75,19 @@ def test_me():
     logger.info('------------- Starting test... -------------')
 
     eth = Interface(iface='eth0')
+    wlan = Interface(iface='wlan0')
 
     resp = eth.get_ip()
     logger.info(repr(resp))
+
+    resp = wlan.get_ip()
+    logger.info(repr(resp))
+
+    resp = wlan.disconnect()
+    #logger.info(repr(resp))
+
+    resp = wlan.connect()
+    #logger.info(repr(resp))
 
     logger.info('-------------    Finished      -------------')
 
