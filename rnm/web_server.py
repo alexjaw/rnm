@@ -1,7 +1,7 @@
 from flask import Flask
 import logging
 
-from rnm import NetworkConnection
+from rnm import Interface
 
 app = Flask(__name__)
 
@@ -28,5 +28,5 @@ if __name__ == '__main__':
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
-    rnm = NetworkConnection(logger=logger)
+    rnm = Interface(logger=logger)
     app.run(host='0.0.0.0')
