@@ -31,23 +31,9 @@ def test_me():
     logger = logging.getLogger(__name__)
     logger.info('------------- Starting test... -------------')
 
-    netcon = Interface()
     wifi = WiFi()
     ap = AccessPoint()
     dhcp = DHCP()
-
-    ips = netcon.get_ip()
-    logger.info(repr(ips))
-    assert type(ips) == list
-
-    resp = ap.status()
-    logger.info(repr(resp))
-
-    resp = dhcp.status()
-    logger.info(repr(resp))
-
-    resp = wifi.setup()
-    logger.info(repr(resp))
 
     logger.info('-------------    Finished      -------------')
 

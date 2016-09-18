@@ -1,7 +1,7 @@
 from flask import Flask
 import logging
 
-from rnm import Interface
+from interface import Interface
 
 app = Flask(__name__)
 
@@ -9,7 +9,7 @@ app = Flask(__name__)
 def index():
     html_elements = []
     html_elements.append('<h1>Hello</h1>')
-    html_elements.append('<p>My IP: ' + str(rnm.get_ip()) + '</p>')
+    html_elements.append('<p>My eth0 IP: ' + str(eth.get_ip()) + '</p>')
     html_elements.append('<p>Can see these hotspots: ' + 'TBD' + '</p>')
     html_page = '\n'.join(html_elements)
     return html_page
@@ -28,5 +28,5 @@ if __name__ == '__main__':
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
-    rnm = Interface(logger=logger)
+    eth = Interface(iface='eth0', logger=logger)
     app.run(host='0.0.0.0')

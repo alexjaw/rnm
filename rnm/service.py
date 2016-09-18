@@ -36,6 +36,7 @@ class Service:
 
 
 class AccessPoint(Service):
+    # todo: better handling of application paths
     setup_script = '/home/pi/rnm/scripts/setup_access_point.sh'
 
     def __init__(self):
@@ -56,3 +57,22 @@ class DHCP(Service):
         p = Popen(['sh', self.setup_script], stdout=PIPE, stderr=PIPE)
         return p.communicate()[0]
 
+
+def test_me():
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+    logger.info('------------- Starting test... -------------')
+
+    ap = AccessPoint()
+    dhcp = DHCP()
+
+    resp = ap.status()
+    logger.info(repr(resp))
+
+    resp = dhcp.status()
+    logger.info(repr(resp))
+
+    logger.info('-------------    Finished      -------------')
+
+if __name__ == '__main__':
+    test_me()
