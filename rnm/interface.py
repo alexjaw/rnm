@@ -5,17 +5,27 @@
 import logging
 from subprocess import check_output, Popen, PIPE, STDOUT
 
+
 class Interface:
-    # todo: check out this package https://pypi.python.org/pypi/netifaces
+    """ Class to create interfaces such as eth0, wlan0, etc...
+
+    :arg string iface: name of the interface, eth0, wlan0, etc...
+    :arg Logger: Normally provided in instantiation, but optional
+
+    :ivar string iface: see above
+    :ivar Logger logger: for logging
+
+    check out this package https://pypi.python.org/pypi/netifaces
+    """
 
     def __init__(self, iface, logger=None):
+        self.iface = iface
         self.logger = logger or logging.getLogger(__name__ + '.Interface')
         # todo: Sometimes we want to run at debug level, how to set that for an
         #       individual class? I get a FileHandler from web_server.py
         #       Right now I do this by setting handler.setLevel(logging.DEBUG)
         #       in web_server.py
         self.logger.info('------------- Starting... -------------')
-        self.iface = iface
 
     def _interface_cmd(self, cmd):
         p = Popen(['sudo', cmd, self.iface], stdout=PIPE, stderr=PIPE)
@@ -45,6 +55,7 @@ class Interface:
             return False
 
     def get_ip(self):
+        """Get IP for the interface, e.g. ifconfig eth0"""
         # OBS: several os commands have to be use '' and NOT ""
         cmd = ['ip', 'addr', 'show', self.iface]
         self.logger.debug('os cmd: {}'.format(cmd))
@@ -84,12 +95,13 @@ def test_me():
     logger.info(repr(resp))
 
     resp = wlan.disconnect()
-    #logger.info(repr(resp))
+    # logger.info(repr(resp))
 
     resp = wlan.connect()
-    #logger.info(repr(resp))
+    # logger.info(repr(resp))
 
     logger.info('-------------    Finished      -------------')
+
 
 if __name__ == '__main__':
     test_me()
