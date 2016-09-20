@@ -9,13 +9,16 @@ from subprocess import check_output, Popen, PIPE, STDOUT
 class Interface:
     """ Class to create interfaces such as eth0, wlan0, etc...
 
-    :arg string iface: name of the interface, eth0, wlan0, etc...
+    :arg str iface: name of the interface, eth0, wlan0, etc...
     :arg Logger: Normally provided in instantiation, but optional
 
     :ivar string iface: see above
     :ivar Logger logger: for logging
 
-    check out this package https://pypi.python.org/pypi/netifaces
+    .. seealso:: Where it is used --
+        :py:meth: 'wireless.WiFi'
+
+    .. note:: Similar package https://pypi.python.org/pypi/netifaces
     """
 
     def __init__(self, iface, logger=None):
