@@ -1,7 +1,7 @@
 from flask import Flask
 import logging
 
-from interface import Interface
+from rnm.interface import Interface
 
 app = Flask(__name__)
 
