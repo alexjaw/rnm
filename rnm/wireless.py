@@ -4,6 +4,7 @@
 
 import logging
 from subprocess import check_output, Popen, PIPE
+from wifi import Cell, Scheme
 
 from interface import Interface
 
@@ -12,6 +13,13 @@ class WiFi(Interface):
 
     def __init__(self):
         Interface.__init__(self, iface='wlan0')  # in python3 only super.__init__()
+        self.hotspots = None
+
+    def scan(self):
+        self.logger.debug('Scanning...')
+        self.hotspots = Cell.all(self.iface)
+        for hotspot in self.hotspots:
+            self.logger.debug(repr(hotspot))
 
     def setup(self):
         p = Popen(['sh', self.setup_script], stdout=PIPE, stderr=PIPE)
@@ -19,7 +27,7 @@ class WiFi(Interface):
 
 
 def test_me():
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger(__name__)
     logger.info('------------- Starting test... -------------')
 
@@ -27,6 +35,8 @@ def test_me():
 
     resp = wifi.get_ip()
     logger.info(repr(resp))
+
+    resp = wifi.scan()
 
     logger.info('-------------    Finished      -------------')
 
