@@ -2,16 +2,24 @@ from flask import Flask
 import logging
 
 from rnm.interface import Interface
+from rnm.wireless import WiFi
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
     html_elements = []
-    html_elements.append('<h1>Hello</h1>')
+    html_elements.append('<h1>Raspberry network manager</h1>')
     html_elements.append('<p>My eth0 IP: ' + str(eth.get_ip()) + '</p>')
     html_elements.append('<p>My wlan0 IP: ' + str(wlan.get_ip()) + '</p>')
-    html_elements.append('<p>Can see these hotspots: ' + 'TBD' + '</p>')
+    html_elements.append('<p>Active hotspot(s) list:</p>')
+    html_elements.append('<ul>')
+    for hotspot in wifi.get_hotspots_info():
+        html_elements.append('<li>ssid/encrypted/quality : '
+                             + hotspot.get('ssid') + '/'
+                             + str(hotspot.get('encrypted')) + '/'
+                             + hotspot.get('quality') + '</li>')
+    html_elements.append('</ul>')
     html_page = '\n'.join(html_elements)
     return html_page
 
@@ -31,4 +39,7 @@ if __name__ == '__main__':
 
     eth = Interface(iface='eth0', logger=logger)
     wlan = Interface(iface='wlan0', logger=logger)
+    wifi = WiFi()
+    wifi.scan()
+    #index()
     app.run(host='0.0.0.0')
