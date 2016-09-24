@@ -13,12 +13,25 @@ class WiFi(Interface):
 
     def __init__(self):
         Interface.__init__(self, iface='wlan0')  # in python3 only super.__init__()
-        self.hotspots = None
+        self._hotspots = []
+
+    def _get_hotspot_info(self, hotspot):
+        info = {}
+        info['ssid'] = hotspot.ssid
+        info['quality'] = hotspot.quality
+        info['encrypted'] = hotspot.encrypted
+        return info
+
+    def get_hotspots_info(self):
+        info = []
+        for hotspot in self._hotspots:
+            info.append(self._get_hotspot_info(hotspot))
+        return info
 
     def scan(self):
         self.logger.debug('Scanning...')
-        self.hotspots = Cell.all(self.iface)
-        for hotspot in self.hotspots:
+        self._hotspots = Cell.all(self.iface)
+        for hotspot in self._hotspots:
             self.logger.debug(repr(hotspot))
 
     def setup(self):
@@ -37,6 +50,7 @@ def test_me():
     logger.info(repr(resp))
 
     resp = wifi.scan()
+    resp = wifi.get_hotspots_info()
 
     logger.info('-------------    Finished      -------------')
 
