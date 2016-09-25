@@ -3,9 +3,15 @@
 {% block content %}
     <h1>Raspberry network manager</h1>
     <p>My eth0 IP: {{ eth_ip }} </p>
-    <p>My wlan0 IP: {{ wlan_ip }} '</p>
+    <p>My wlan0 IP: {{ wlan_ip }} </p>
     <p>Active hotspot(s) list:</p>
     <ul>
-        <li>ssid/encrypted/quality : TBD/TBD/TBD</li>
+        {% for hotspot in hotspots %}
+            <li>ssid/encrypted/quality :
+                {{ hotspot.get('ssid') }}/
+                {{ hotspot.get('encrypted') }}/
+                {{ hotspot.get('quality') }}
+            </li>
+        {% endfor %}
     </ul>
 {% endblock %}

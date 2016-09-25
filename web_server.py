@@ -15,7 +15,8 @@ bootstrap = Bootstrap(app)
 def index():
     return render_template('index.html',
                            eth_ip=eth.get_ip(),
-                           wlan_ip=wlan.get_ip(),)
+                           wlan_ip=wlan.get_ip(),
+                           hotspots=wifi.get_hotspots_info(),)
 
 if __name__ == '__main__':
     # This will provide info to stout
@@ -33,6 +34,6 @@ if __name__ == '__main__':
     eth = Interface(iface='eth0', logger=logger)
     wlan = Interface(iface='wlan0', logger=logger)
     wifi = WiFi()
-    #wifi.scan()
+    wifi.scan()
 
     manager.run()
