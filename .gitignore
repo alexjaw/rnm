@@ -1,3 +1,6 @@
+static/js/jquery
+static/themes/jquery
+
 .idea/
 
 # Byte-compiled / optimized / DLL files
@@ -89,3 +92,5 @@ ENV/
 
 # Rope project settings
 .ropeproject
+www/static/themes/custom/
+static/themes/custom/

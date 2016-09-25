@@ -1,28 +1,20 @@
-from flask import Flask
+from flask import Flask, render_template
+from flask.ext.bootstrap import Bootstrap
 import logging
 
 from rnm.interface import Interface
 from rnm.wireless import WiFi
 
 app = Flask(__name__)
+bootstrap = Bootstrap(app)
 
 @app.route('/')
 def index():
-    html_elements = []
-    html_elements.append('<h1>Raspberry network manager</h1>')
-    html_elements.append('<p>My eth0 IP: ' + str(eth.get_ip()) + '</p>')
-    html_elements.append('<p>My wlan0 IP: ' + str(wlan.get_ip()) + '</p>')
-    html_elements.append('<p>Active hotspot(s) list:</p>')
-    html_elements.append('<ul>')
-    for hotspot in wifi.get_hotspots_info():
-        html_elements.append('<li>ssid/encrypted/quality : '
-                             + hotspot.get('ssid') + '/'
-                             + str(hotspot.get('encrypted')) + '/'
-                             + hotspot.get('quality') + '</li>')
-    html_elements.append('</ul>')
-    html_page = '\n'.join(html_elements)
-    return html_page
-
+    return render_template('index.html',
+                           page_id='index',
+                           eth_ip='TBD',
+                           wlan_ip='TBD',
+                           )
 
 if __name__ == '__main__':
     # This will provide info to stout
@@ -40,6 +32,6 @@ if __name__ == '__main__':
     eth = Interface(iface='eth0', logger=logger)
     wlan = Interface(iface='wlan0', logger=logger)
     wifi = WiFi()
-    wifi.scan()
+    #wifi.scan()
     #index()
-    app.run(host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
