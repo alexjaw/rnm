@@ -1,6 +1,7 @@
 static/js/jquery
 static/themes/jquery
 
+venv/
 .idea/
 
 # Byte-compiled / optimized / DLL files

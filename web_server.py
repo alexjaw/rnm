@@ -1,20 +1,21 @@
 from flask import Flask, render_template
-from flask.ext.bootstrap import Bootstrap
+from flask_script import Manager
+from flask_bootstrap import Bootstrap
 import logging
 
 from rnm.interface import Interface
 from rnm.wireless import WiFi
 
 app = Flask(__name__)
+manager = Manager(app)
 bootstrap = Bootstrap(app)
 
 @app.route('/')
+@app.route('/index')
 def index():
     return render_template('index.html',
-                           page_id='index',
-                           eth_ip='TBD',
-                           wlan_ip='TBD',
-                           )
+                           eth_ip=eth.get_ip(),
+                           wlan_ip=wlan.get_ip(),)
 
 if __name__ == '__main__':
     # This will provide info to stout
@@ -33,5 +34,5 @@ if __name__ == '__main__':
     wlan = Interface(iface='wlan0', logger=logger)
     wifi = WiFi()
     #wifi.scan()
-    #index()
-    app.run(debug=True, host='0.0.0.0')
+
+    manager.run()
