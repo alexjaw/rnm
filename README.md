@@ -8,6 +8,7 @@ Similar projects:
 - smartanthill: : http://smartanthill-20.readthedocs.io/en/latest/
 
 Starting points:
+- Wi-Fi Direct: https://en.wikipedia.org/wiki/Wi-Fi_Direct
 - Raspbian jessie networking is using /etc/dhcpcd, previously configured with /etc/network/interfaces, see for example http://raspberrypi.stackexchange.com/questions/39785/dhcpcd-vs-etc-network-interfaces
 - Debian network configurations: https://wiki.debian.org/NetworkConfiguration
 - Access Point setup: http://elinux.org/RPI-Wireless-Hotspot
