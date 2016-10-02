@@ -3,8 +3,7 @@ from flask_script import Manager
 from flask_bootstrap import Bootstrap
 import logging
 
-from rnm.interface import Interface
-from rnm.wireless import WiFi
+from rnm.rnm import RaspberryNetworkManager
 
 app = Flask(__name__)
 manager = Manager(app)
@@ -14,9 +13,9 @@ bootstrap = Bootstrap(app)
 @app.route('/index')
 def index():
     return render_template('index.html',
-                           eth_ip=eth.get_ip(),
-                           wlan_ip=wlan.get_ip(),
-                           hotspots=wifi.get_hotspots_info(),)
+                           eth_ip=rnm.eth.get_ip(),
+                           wlan_ip=rnm.wlan.get_ip(),
+                           hotspots=rnm.wifi.get_hotspots_info(),)
 
 if __name__ == '__main__':
     # This will provide info to stout
@@ -31,9 +30,8 @@ if __name__ == '__main__':
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
-    eth = Interface(iface='eth0', logger=logger)
-    wlan = Interface(iface='wlan0', logger=logger)
-    wifi = WiFi()
-    wifi.scan()
+    # Init rnm
+    rnm = RaspberryNetworkManager()
 
+    # Start server
     manager.run()

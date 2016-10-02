@@ -8,8 +8,16 @@ from wireless import Interface, WiFi
 class RaspberryNetworkManager:
     '''...service...'''
 
-    def __init__(self):
-        self.netcon = Interface()
+    def __init__(self, logger=None):
+        self.logger = logger or logging.getLogger(__name__ + '.RaspberryNetworkManager')
+        # todo: Sometimes we want to run at debug level, how to set that for an
+        #       individual class? I get a FileHandler from web_server.py
+        #       Right now I do this by setting handler.setLevel(logging.DEBUG)
+        #       in web_server.py
+        self.logger.info('------------- Starting... -------------')
+        self.eth = Interface(iface='eth0', logger=logger)
+        self.wlan = Interface(iface='wlan0', logger=logger)
+        self.wifi = WiFi()
 
     def get_mode(self):
         ''' Should probably return something saying if its acting as ap

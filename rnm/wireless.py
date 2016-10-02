@@ -24,6 +24,7 @@ class WiFi(Interface):
 
     def get_hotspots_info(self):
         info = []
+        self.scan()
         for hotspot in self._hotspots:
             info.append(self._get_hotspot_info(hotspot))
         return info
@@ -49,7 +50,6 @@ def test_me():
     resp = wifi.get_ip()
     logger.info(repr(resp))
 
-    resp = wifi.scan()
     resp = wifi.get_hotspots_info()
 
     logger.info('-------------    Finished      -------------')
