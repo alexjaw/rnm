@@ -3,6 +3,9 @@ Raspberry Network Manager (jessie)
 
 Purpose: Provide services that can connect a headless raspberry to a wifi network. Let's say we have a device equipped with a rpi and that we place it in a new wifi environment. Then we would like to have an easy way (for non-technical end-users) to enable wireless networking for our device. If the device does not find a guest network, then it should start an access point and provide some service for further wifi network configuration.
 
+After installation you should be able to run the web server with
+python web_server.py runserver --host 0.0.0.0
+
 Similar projects:
 (search for "wifi" on pypi)
 - smartanthill: : http://smartanthill-20.readthedocs.io/en/latest/

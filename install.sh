@@ -8,7 +8,7 @@ echo
 WEB_SERVER=rnm/web_server.py
 SCRIPTS=scripts
 
-sh $SCRIPTS/access_point.sh
+#sh $SCRIPTS/access_point.sh
 sh $SCRIPTS/install_pip.sh
 
 echo installing requirements...

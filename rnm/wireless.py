@@ -4,7 +4,12 @@
 
 import logging
 from subprocess import check_output, Popen, PIPE
-from wifi import Cell, Scheme
+try:
+    from wifi import Cell, Scheme
+    is_wifi_module = True
+except Exception:
+    print 'wifi module seems not to be installed'
+    is_wifi_module = False
 
 from interface import Interface
 
