@@ -1,5 +1,14 @@
 #!/usr/bin/python
+import os
 from subprocess import check_output, Popen, PIPE
+magic_file = 'ap' 
+homedir = '/home/pi/'
+
+print 'Starting check of ap status...'
+f = os.path.join(homedir, magic_file)
+if not os.path.exists(f):
+    print 'Exit. Magic file, {}, missing.'.format(f)
+    exit(0)
 
 def shell_cmd(cmd):
     p = Popen(cmd, stdout=PIPE, stderr=PIPE)
@@ -52,7 +61,7 @@ def ap_address(addr='192.168.42.1'):
     resp = shell_cmd(['hostname', '-I',])
     if resp == -1:
         return -1
-    print 'addresses: {}'.format(resp)
+    print 'Found addresses: {}'.format(resp)
     if addr in resp:
         return 0
     else:
@@ -70,7 +79,6 @@ def ap_address(addr='192.168.42.1'):
             return -1
 
 
-print 'Testing...'
 print ap_address()
 serv = 'hostapd'
 print service_start(serv)
