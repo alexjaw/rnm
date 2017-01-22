@@ -10,6 +10,11 @@ try:
 except Exception:
     print 'wifi module seems not to be installed'
     is_wifi_module = False
+    class Cell:
+        def __init__(self):
+            self.ssid='foobar'
+            self.quality='-67'
+            self.encrypted='ESS'
 
 from interface import Interface
 
@@ -36,7 +41,10 @@ class WiFi(Interface):
 
     def scan(self):
         self.logger.debug('Scanning...')
-        self._hotspots = Cell.all(self.iface)
+        if is_wifi_module:
+            self._hotspots = Cell.all(self.iface)
+        else:
+            self._hotspots = [Cell(),]
         for hotspot in self._hotspots:
             self.logger.debug(repr(hotspot))
 
